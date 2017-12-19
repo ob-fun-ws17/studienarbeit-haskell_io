@@ -1,0 +1,3 @@
+# JpegRawOrganizer
+
+Work in progess....
