@@ -1,1 +1,1 @@
-# studienarbeit-haskell_io
+# JpegRawOrganizer
