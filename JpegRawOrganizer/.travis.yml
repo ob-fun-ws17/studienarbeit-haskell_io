@@ -1,1 +1,46 @@
-resolver: lts-9.14
+# Use new container infrastructure to enable caching
+sudo: false
+
+# Do not choose a language; we provide our own build tools.
+language: generic
+
+# Caching so the next build will be fast too.
+cache:
+  directories:
+  - $HOME/.ghc
+  - $HOME/.cabal
+  - $HOME/.stack
+
+# Ensure necessary system libraries are present
+addons:
+  apt:
+    packages:
+      - libgmp-dev
+
+before_install:
+# Download and unpack the stack executable
+- mkdir -p ~/.local/bin
+- export PATH=$HOME/.local/bin:$PATH
+- travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+
+install:
+# Build dependencies
+- stack --no-terminal --install-ghc test --only-dependencies
+
+script:
+# Build the package, its tests, and its docs and run the tests
+- stack --no-terminal test --haddock --no-haddock-deps
+- export HADDOCK_ROOT="$(stack path --dist-dir)"
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+  local_dir: $HADDOCK_ROOT/doc/html/Hangkell
+  on:
+    branch: master
+
+notifications:
+  email:
+    on_success: never # default: change
+on_failure: always # default: always
