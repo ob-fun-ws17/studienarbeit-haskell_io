@@ -2,9 +2,9 @@ name:                JpegRawOrganizer
 version:             0.1.0.0
 github:              "githubuser/JpegRawOrganizer"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2017 Author name here"
+author:              "Andreas Moser, Christoph Sürig"
+maintainer:          ""
+copyright:           "2017 Andreas Moser, Christoph Sürig"
 
 extra-source-files:
 - README.md
@@ -24,6 +24,7 @@ dependencies:
 - directory
 - filepath
 - cgi
+- split
 
 library:
   source-dirs: src
@@ -41,6 +42,7 @@ executables:
     - directory
     - filepath
     - cgi
+    - split
 
 tests:
   JpegRawOrganizer-test:
@@ -55,3 +57,4 @@ tests:
     - directory
     - filepath
     - cgi
+    - split

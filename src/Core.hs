@@ -1,4 +1,4 @@
-module Core() where
+module Core(PhotoSetting (..), PhotoFile, getTestString) where
 
 import System.Directory
 import System.FilePath
@@ -16,10 +16,12 @@ data PhotoSetting = PhotoSetting
   { jpegPath :: String
   , rawPath :: String
   , binPath :: String
-  , delete :: Bool
+  , deleteFiles :: Bool
   , rawEnding :: String
   , jpegEnding :: String
   }
+  deriving (Show,Eq)
+
 
 getPhotos :: FilePath -> String -> [PhotoFile]
 getPhotos path extension = map toPhotoFile (getMocks path extension)
@@ -27,7 +29,8 @@ getPhotos path extension = map toPhotoFile (getMocks path extension)
 toPhotoFile :: FilePath -> PhotoFile
 toPhotoFile file = PhotoFile{path = (dropFileName file), fileName = (takeBaseName file), fileExtension = (takeExtension file)}
 
-
+getTestString :: String
+getTestString = "test"
 
 
 
