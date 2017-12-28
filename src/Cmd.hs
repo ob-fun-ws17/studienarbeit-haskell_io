@@ -29,7 +29,8 @@ handleCommand("JpegPath",path) settings= (settings {jpegPath = path},"jpegPath i
 handleCommand("BinPath",path) settings= (settings {binPath = path},"binPath is now "++ show path)
 handleCommand("RawEnding",ending) settings= (settings {rawEnding = ending},"rawEnding is now " ++ show ending)
 handleCommand("JpegEnding",ending) settings= (settings {jpegEnding = ending}, "jpegEnding is now "++ show ending)
-handleCommand("DeleteFiles",delete) settings = (settings {deleteFiles = stringToBool delete},"delete Files: " ++ show (stringToBool delete))
+handleCommand("FlagDeleteFiles",delete) settings = (settings {deleteFiles = stringToBool delete},"delete Files: " ++ show (stringToBool delete))
+-- handleCommand("showDifference",_) settings = (settings,calcDifference settings)
 handleCommand (cmd,_) settings =(settings,"! Unknown Command: " ++ show cmd++"\r\n"++getHelp)
 
 
@@ -57,3 +58,9 @@ stringToBool "1" = True
 stringToBool "j" = True
 stringToBool "yes" = True
 stringToBool str = False
+
+calcDifference ::  PhotoSetting -> IO String
+calcDifference  settings = do
+   list <- loadAndGetDifference settings
+   let message = concat (map fileName list)
+   return message
