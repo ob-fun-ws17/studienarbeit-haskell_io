@@ -1,3 +1,3 @@
 # JpegRawOrganizer
-
-[Documentation](./docs/haddock/index.html)
+#
+[Haddock Documentation](./haddock/index.html)
