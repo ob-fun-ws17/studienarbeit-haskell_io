@@ -1,6 +1,4 @@
 -- |The module to handle all comands entered at the console.
--- Info: For simplicitie's sake the files matching the rawEnding of the settings are
--- calleds raw files and the files matching the jpegEnding are called jpeg files even they could have any ending.
 module Cmd (cmdMain) where
 
 import System.IO (hSetBuffering, BufferMode(NoBuffering), stdout)
@@ -17,8 +15,8 @@ initsettings = PhotoSetting{jpegPath =  uniformFilePath "C:/Users/Andreas\\Docum
                           , rawEnding = uniformFileExtension ".raw"
                           , jpegEnding = uniformFileExtension ".jpg"} :: PhotoSetting
 
--- |Starts to listen for command on the console.
-cmdMain :: IO () -- ^ An empty io monade.
+-- |Starts to listen for commands on the console.
+cmdMain :: IO ()
 cmdMain = do
   hSetBuffering stdout NoBuffering
   currDir <- getCurrentDirectory

@@ -1,7 +1,9 @@
+-- | Main module of the JpegRawOrganizer.
 module Main where
 import System.Environment
 import Cmd
 
+-- | The main method.
 main :: IO ()
 main = do
       arguments <- getArgs
