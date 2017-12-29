@@ -1,37 +1,55 @@
 module Cmd (cmdMain) where
 
 import System.IO (hSetBuffering, BufferMode(NoBuffering), stdout)
+import System.Directory
 import qualified Data.List.Split as Spl
+import qualified Data.Text as T
 import Core
 
-initsettings = PhotoSetting{jpegPath = "./", rawPath ="./", binPath = "./bin", deleteFiles = False, rawEnding = ".raw", jpegEnding = ".jpg"} :: PhotoSetting
+initsettings = PhotoSetting{jpegPath =  uniformFilePath "C:/Users/Andreas\\Documents/Git/Studium/studienarbeit-haskell_io/photo/"
+                          , rawPath = uniformFilePath "C:/Users/Andreas/Documents/Git/Studium/studienarbeit-haskell_io/photo/RAW"
+                          , binPath = uniformFilePath "C:/Users/Andreas/Documents/Git/Studium/studienarbeit-haskell_io/photo/bin"
+                          , deleteFiles = False
+                          , rawEnding = uniformFileExtension ".raw"
+                          , jpegEnding = uniformFileExtension ".jpg"} :: PhotoSetting
 
 cmdMain :: IO ()
 cmdMain = do
   hSetBuffering stdout NoBuffering
-  inputHandler (initsettings,"Welcome to the JPEG RAW Organizer \nType \"help\" to see all commands\n")
+  currDir <- getCurrentDirectory
+  inputHandler (initInitSettings initsettings currDir,"Welcome to the JPEG RAW Organizer \nType \"help\" to see all commands\n")
+  -- inputHandler (initsettings,"Welcome to the JPEG RAW Organizer \nType \"help\" to see all commands\n")
 
 inputHandler :: (PhotoSetting, String) -> IO ()
 inputHandler (settings, message) = do
   hSetBuffering stdout NoBuffering
   putStrLn message
-  input <- readLn :: IO String
-  if input == "quit"
-    then putStrLn "Beenden ..."
-    else inputHandler (handleCommand (toTuple input) settings)
+  input <- getLine :: IO String
+
+  if input == "quit" || input == ":q"
+    then putStrLn "Bye ..."
+    else do
+      handledCommand <- handleCommand (toTuple input) settings
+      inputHandler handledCommand
 
 
-handleCommand :: (String, String) -> PhotoSetting ->(PhotoSetting,String)
-handleCommand ("help",_) settings = (settings,getHelp)
-handleCommand("printSettings",_) settings = (settings,show settings)
-handleCommand("RawPath",path) settings = (settings {rawPath = path},"rawPath is now " ++ show path)
-handleCommand("JpegPath",path) settings= (settings {jpegPath = path},"jpegPath is now " ++ show path)
-handleCommand("BinPath",path) settings= (settings {binPath = path},"binPath is now "++ show path)
-handleCommand("RawEnding",ending) settings= (settings {rawEnding = ending},"rawEnding is now " ++ show ending)
-handleCommand("JpegEnding",ending) settings= (settings {jpegEnding = ending}, "jpegEnding is now "++ show ending)
-handleCommand("FlagDeleteFiles",delete) settings = (settings {deleteFiles = stringToBool delete},"delete Files: " ++ show (stringToBool delete))
--- handleCommand("showDifference",_) settings = (settings,calcDifference settings)
-handleCommand (cmd,_) settings =(settings,"! Unknown Command: " ++ show cmd++"\r\n"++getHelp)
+handleCommand :: (String, String) -> PhotoSetting -> IO (PhotoSetting,String)
+handleCommand (cmd,arg) settings
+  | (cmd == "help" || cmd == "h") = return (settings,getHelp)
+  | (cmd == "showSettings" || cmd == "sett") = return (settings,show settings)
+  | (cmd == "showDifferences" || cmd == "diff") = do
+      diff <- calcDifference settings
+      return (settings,diff)
+  | cmd == "start" = do
+      processed <- startProcess settings
+      return (settings,processed)
+  | (cmd == "RawPath" || cmd == "rp") = return (settings {rawPath = uniformFilePath arg},"rawPath is now " ++ show (uniformFilePath arg))
+  | (cmd == "JpegPath" || cmd == "jp") = return (settings {jpegPath = uniformFilePath arg},"jpegPath is now " ++ show (uniformFilePath arg))
+  | (cmd == "BinPath" || cmd == "bp") = return (settings {binPath = uniformFilePath arg},"binPath is now " ++ show (uniformFilePath arg))
+  | (cmd == "RawEnding" || cmd == "rend") = return (settings {rawEnding = uniformFileExtension arg},"rawEnding is now " ++ show  (uniformFileExtension arg))
+  | (cmd == "JpegEnding" || cmd == "jend") = return (settings {jpegEnding = uniformFileExtension arg},"jpegEnding is now " ++ show (uniformFileExtension arg))
+  | (cmd == "FlagDeleteFiles" || cmd == "fdf") = return (settings {deleteFiles = stringToBool arg},"delete Files: " ++ show (stringToBool arg))
+  | otherwise = return (settings,"! Unknown Command: " ++ show cmd++"\r\n"++getHelp)
 
 
 
@@ -39,9 +57,19 @@ getHelp :: String
 getHelp  = concat
     ["-------------------------------------------\r\n"
     ,"HELP:\r\n"
-    ,"+ Type \"quit\" to leave the program.\r\n"
-    ,"+ Type \"help\" for help.\r\n"
-    ,"-------------------------------------------\r\n"]
+    ,"+ Type \"quit\" or \":q\" to leave the program.\r\n"
+    ,"+ Type \"help\" or \"h\" for help.\r\n"
+    ,"+ Type \"showSettings\" or \"sett\" to print the actual settings to the console.\r\n"
+    ,"+ Type \"showDifferences\" or \"diff\" shows the list of differing raw files.\r\n"
+    ,"+ Type \"start\" starts to delete or move the differing files.\r\n"
+    ,"+ Type \"RawPath\" or \"rp\" [absolute Path] sets the path to the raw files.\r\n"
+    ,"+ Type \"JpegPath\" or \"jp\" [absolute Path] sets the path to the jpeg files.\r\n"
+    ,"+ Type \"BinPath\" or \"bp\" [absolute Path] sets the path to the bin folder.\r\n"
+    ,"+ Type \"RawEnding\" or \"rend\" [.fileEnding] sets the file ending of the raw files.\r\n"
+    ,"+ Type \"JpegEnding\" or \"jend\" [.fileEnding] sets the file ending of the jpeg files.\r\n"
+    ,"+ Type \"FlagDeleteFiles\" or \"fdf\" [True/False] sets the flag if the files should be deleted or moved to the bin folder.\r\n"
+    ,"-------------------------------------------\r\n"
+    ]
 
 
 toTuple :: String -> (String,String)
@@ -52,15 +80,52 @@ toTuple input = do
     else (head splitted,"")
 
 stringToBool :: String -> Bool
-stringToBool "True" = True
-stringToBool "true" = True
-stringToBool "1" = True
-stringToBool "j" = True
-stringToBool "yes" = True
-stringToBool str = False
+stringToBool str = (str == "True" || str == "true")
+
 
 calcDifference ::  PhotoSetting -> IO String
 calcDifference  settings = do
    list <- loadAndGetDifference settings
-   let message = concat (map fileName list)
+   let message = "Differences: \r\n" ++ formatPhotoFileList list
    return message
+
+startProcess :: PhotoSetting -> IO String
+startProcess settings = do
+  if deleteFiles settings
+    then do
+      deletedFiles <- deleteDifferenceFiles settings
+      let message = "Deleted: \r\n"++ formatPhotoFileList deletedFiles
+      return message
+    else do
+      movedFiles <- moveDifferenceFilesToBin settings
+      let message ="Moved: \r\n" ++ formatPhotoFileList movedFiles
+      return message
+
+uniformFilePath :: String -> String
+uniformFilePath path = do
+  let nPath = map (\c -> if c == '\\' then '/' else c) path
+  if length path > 0
+    then if last nPath /= '/'
+        then nPath ++ "/"
+        else nPath
+    else "./"
+
+uniformFileExtension :: String -> String
+uniformFileExtension ext = do
+  if length ext >0
+    then if head ext /= '.'
+          then "." ++ ext
+          else ext
+    else ".*"
+
+initInitSettings :: PhotoSetting -> String -> PhotoSetting
+initInitSettings settings path = do
+  let firstStep = settings {jpegPath = uniformFilePath path}
+  let secondStep = firstStep {rawPath = uniformFilePath $ jpegPath firstStep ++ "RAW"}
+  secondStep {binPath = uniformFilePath $ jpegPath firstStep ++ "bin"}
+
+formatPhotoFileList :: [PhotoFile] -> String
+formatPhotoFileList list = concat [ "----------------------------------------------\r\n"
+                                  , concat (map (\x -> "- \"" ++ fileName x ++ fileExtension x ++"\"\r\n") list)
+                                  , "----------------------------------------------\r\n"
+                                  ]

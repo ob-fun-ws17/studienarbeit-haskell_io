@@ -25,6 +25,7 @@ dependencies:
 - filepath
 - cgi
 - split
+- text
 
 library:
   source-dirs: src
@@ -43,6 +44,7 @@ executables:
     - filepath
     - cgi
     - split
+    - text
 
 tests:
   JpegRawOrganizer-test:
@@ -58,3 +60,4 @@ tests:
     - filepath
     - cgi
     - split
+    - text

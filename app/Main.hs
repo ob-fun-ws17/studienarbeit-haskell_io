@@ -5,8 +5,6 @@ import Cmd
 main :: IO ()
 main = do
       arguments <- getArgs
-      if length arguments == 1 && (head arguments) == "--gui"
+      if length arguments == 1 && (head arguments) == "gui"
         then putStrLn "start the GUI! -- Which GUI? -- OUR GUI! -- We have no GUI! -- ok ... sorry..."
-
-        else
-             cmdMain
+        else cmdMain
