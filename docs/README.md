@@ -30,6 +30,7 @@ Beim Fotografieren entsteht pro Foto sowohl eine RAW als auch eine JPEG Datei. S
 |RawEnding |**rend**|Eine Dateiendung|Setzt die Dateiendung der Dateien, die als RAW Dateien klassifiziert werden sollen.\*|rend .CR2|
 |JpegEnding |**jend**|Eine Dateiendung|Setzt die Dateiendung der Dateien, die als JPEG Dateien klassifiziert werden sollen.\*|jend jpg|
 |FlagDeleteFiles |**fdf**|[True\|False]|True wenn die RAW Dateien gelöscht werden sollen, False falls sie verschoben werden sollen.|fdf False|
+
 \* Dateiendungen werden nicht case-sensitiv behandelt. Also ist JPG == jpg.
 
 ### Standart Einstellungen:
