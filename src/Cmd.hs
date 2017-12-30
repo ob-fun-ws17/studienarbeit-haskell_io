@@ -1,5 +1,5 @@
 -- |The module to handle all comands entered at the console.
-module Cmd (cmdMain) where
+module Cmd (cmdMain, inputHandler, handleCommand, toTuple, stringToBool, uniformFilePath, uniformFileExtension,  formatPhotoFileList) where
 
 import System.IO (hSetBuffering, BufferMode(NoBuffering), stdout)
 import System.Directory
@@ -87,10 +87,12 @@ toTuple :: String         -- ^The string the user write on the console.
        -> (String,String) -- ^Tuple of the command identifier and it optional
                           -- arguments (maybe an empty string)
 toTuple input = do
-  let splitted = Spl.splitOn " " input
-  if length splitted == 2
-    then (head splitted, last splitted)
-    else (head splitted,"")
+  let splitted = T.breakOn (T.pack " ") (T.pack input)
+  let first = T.unpack  (fst splitted)
+  let second = (T.unpack $ T.strip (snd splitted))
+  (first,second)
+
+
 
 -- |Parses a string to a boolean.
 -- Accepted are \"True\" and \"true\" all other string result in False.
