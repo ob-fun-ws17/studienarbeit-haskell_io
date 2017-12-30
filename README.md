@@ -1,5 +1,5 @@
 # JpegRawOrganizer (JRO)
-[Project Website (enthält den selben schmarn wie diese readme)](https://ob-fun-ws17.github.io/studienarbeit-haskell_io/)
+[Projekt Website](https://ob-fun-ws17.github.io/studienarbeit-haskell_io/)
 
 ## Was ist der JpegRawOrganizer?
 Der JpegRawOrganizer, im Folgenden JRO genannt, ist ein Programm zum Aussortieren von Dateien beispielsweise Fotos. 
