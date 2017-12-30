@@ -35,7 +35,7 @@ Beim Fotografieren entsteht pro Foto sowohl eine RAW als auch eine JPEG Datei. S
 
 ### Standart Einstellungen:
 |Parameter|Wert|
-|:---|:---|
+|:-------|:-------|
 |jpegPath|Aktueller Pfad des Programms|
 |rawPath|Aktueller Pfad des Programms/RAW/|
 |binPath|Aktueller Pfad des Programms/bin/|
