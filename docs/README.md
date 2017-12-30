@@ -34,6 +34,8 @@ Beim Fotografieren entsteht pro Foto sowohl eine RAW als auch eine JPEG Datei. S
 \* Dateiendungen werden nicht case-sensitiv behandelt. Also ist JPG == jpg.
 
 ### Standart Einstellungen:
+
+
 |Parameter|Wert|
 |:-------|:-------|
 |jpegPath|Aktueller Pfad des Programms|
