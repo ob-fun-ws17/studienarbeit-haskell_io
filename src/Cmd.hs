@@ -3,7 +3,6 @@ module Cmd (cmdMain, inputHandler, handleCommand, toTuple, stringToBool, uniform
 
 import System.IO (hSetBuffering, BufferMode(NoBuffering), stdout)
 import System.Directory
-import qualified Data.List.Split as Spl
 import qualified Data.Text as T
 import Core
 

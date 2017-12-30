@@ -5,7 +5,7 @@
 -- in the last step, the core, depending on the settings, deletes or moves all differences.
 -- Info: For simplicitie's sake the files matching the rawEnding of the settings are
 -- calleds raw files and the files matching the jpegEnding are called jpeg files even they could have any ending and could be files of any type.
-module Core(PhotoSetting (..), PhotoFile(..), loadAndGetDifference, deleteDifferenceFiles, moveDifferenceFilesToBin) where
+module Core(PhotoSetting (..), PhotoFile(..), loadAndGetDifference, deleteDifferenceFiles, moveDifferenceFilesToBin, toPhotoFile, concatFilePath, getFilepathsFromPhotoFiles, addPathToPhotoFiles) where
 
 import System.Directory
 import System.FilePath
@@ -38,7 +38,7 @@ data PhotoSetting = PhotoSetting
   , jpegEnding :: String -- ^ the filex extension of the files, which should be classified as \"Jpeg file\" for example \".jpg\"
   }
   deriving (Eq)
--- | this instance of show, formats the Photosettings String to make it appear more beautiful. 
+-- | this instance of show, formats the Photosettings String to make it appear more beautiful.
 instance Show PhotoSetting where
   show (PhotoSetting a b c d e f) = concat [ "PhotoSettings: \r\n"
                                             , "jpegPath:    "++ show a ++ "\r\n"

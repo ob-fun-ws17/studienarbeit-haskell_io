@@ -6,10 +6,9 @@ import Core
 import Test.Hspec
 import Test.QuickCheck
 
--- formatPhotoFileList
 spec :: Spec
--- | tests for uniformFileExtension
 spec = do
+  -- | tests for uniformFileExtension
   describe "uniformFileExtension" $ do
     it "uniformes the file extension jpg" $
       uniformFileExtension "jpg" `shouldBe` ".jpg"
@@ -17,7 +16,7 @@ spec = do
       uniformFileExtension ".jpg" `shouldBe` ".jpg"
     it "uniformes the empty file extension" $
       uniformFileExtension "" `shouldBe` ".*"
--- | tests for uniformFilePath
+  -- | tests for uniformFilePath
   describe "uniformFilePath" $ do
     it "uniforms the path C:/user/noUser" $
       uniformFilePath "C:/user/noUser" `shouldBe` "C:/user/noUser/"
