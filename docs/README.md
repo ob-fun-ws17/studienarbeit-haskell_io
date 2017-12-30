@@ -1,6 +1,8 @@
 # JpegRawOrganizer (JRO)
 ## Was ist der JpegRawOrganizer?
-Der JpegRawOrganizer, im Folgenden JRO genannt, ist ein Programm zum Aussortieren von Beispielsweise Fotos. Beim Fotografieren entsteht pro Foto sowohl eine RAW als auch eine JPEG Datei. Sortiert man diese bzw. löscht die schlechten Fotos, so macht man dies meist mit den JPEG Dateien. Danach müssen allerdings noch die zugehörigen RAWs gelöscht werden. Hierbei hilft der JRO, indem er die vorhandenen JPEG mit den RAW Dateien vergleicht und die RAWs zu denen das Programm kein zugehöriges JPEG findet, je nach Einstellung entweder Löscht oder in einen entsprechenden Ordner verschiebt. Da nicht jede Kamera das gleiche RAW und JPEG Format verwendet (Beispielsweise CR2, JPG oder DNG, JPEG) ist es außerdem möglich die Dateiendung manuell anzupassen. Dies ist natürlich nicht nur auf Foto Dateiformate beschränkt, so dass der JRO für beliebige Dateimengen verwendet werden kann.
+Der JpegRawOrganizer, im Folgenden JRO genannt, ist ein Programm zum Aussortieren von Dateien beispielsweise Fotos. 
+
+Beim Fotografieren entsteht pro Foto sowohl eine RAW als auch eine JPEG Datei. Sortiert man diese bzw. löscht die schlechten Fotos, so macht man dies meist mit den JPEG Dateien. Danach müssen allerdings noch die zugehörigen RAWs gelöscht werden. Hierbei hilft der JRO, indem er die vorhandenen JPEG mit den RAW Dateien vergleicht und die RAWs zu denen das Programm kein zugehöriges JPEG findet, je nach Einstellung entweder Löscht oder in einen entsprechenden Ordner verschiebt. Da nicht jede Kamera das gleiche RAW und JPEG Format verwendet (Beispielsweise CR2, JPG oder DNG, JPEG) ist es außerdem möglich die Dateiendung manuell anzupassen. Dies ist natürlich nicht nur auf Foto Dateiformate beschränkt, so dass der JRO für beliebige Dateimengen verwendet werden kann.
 
 ## Building and Executing JpegRawOrganizer (JRO)
 ### Building 
