@@ -14,6 +14,8 @@ spec = do
       uniformFileExtension "jpg" `shouldBe` ".jpg"
     it "uniformes the file extension .jpg" $
       uniformFileExtension ".jpg" `shouldBe` ".jpg"
+    it "uniformes the file extension .JPG" $
+      uniformFileExtension ".JPG" `shouldBe` ".jpg"
     it "uniformes the empty file extension" $
       uniformFileExtension "" `shouldBe` ".*"
   -- | tests for uniformFilePath

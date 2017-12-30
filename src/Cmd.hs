@@ -1,17 +1,20 @@
 -- |The module to handle all comands entered at the console.
+-- Info: For simplicitie's sake the files matching the rawEnding of the settings are
+-- calleds raw files and the files matching the jpegEnding are called jpeg files even they could have any ending and could be files of any type.
 module Cmd (cmdMain, inputHandler, handleCommand, toTuple, stringToBool, uniformFilePath, uniformFileExtension,  formatPhotoFileList) where
 
 import System.IO (hSetBuffering, BufferMode(NoBuffering), stdout)
 import System.Directory
 import qualified Data.Text as T
+import Data.Char
 import Core
 
 
-initsettings = PhotoSetting{jpegPath =  uniformFilePath "C:/Users/Andreas\\Documents/Git/Studium/studienarbeit-haskell_io/photo/"
-                          , rawPath = uniformFilePath "C:/Users/Andreas/Documents/Git/Studium/studienarbeit-haskell_io/photo/RAW"
-                          , binPath = uniformFilePath "C:/Users/Andreas/Documents/Git/Studium/studienarbeit-haskell_io/photo/bin"
+initsettings = PhotoSetting{jpegPath =  uniformFilePath "./"
+                          , rawPath = uniformFilePath "./"
+                          , binPath = uniformFilePath "./"
                           , deleteFiles = False
-                          , rawEnding = uniformFileExtension ".raw"
+                          , rawEnding = uniformFileExtension ".cr2"
                           , jpegEnding = uniformFileExtension ".jpg"} :: PhotoSetting
 
 -- |Starts to listen for commands on the console.
@@ -19,8 +22,8 @@ cmdMain :: IO ()
 cmdMain = do
   hSetBuffering stdout NoBuffering
   currDir <- getCurrentDirectory
-  inputHandler (initInitSettings initsettings currDir,"Welcome to the JPEG RAW Organizer \nType \"help\" to see all commands\n")
-  -- inputHandler (initsettings,"Welcome to the JPEG RAW Organizer \nType \"help\" to see all commands\n")
+  let settings = initInitSettings initsettings currDir
+  inputHandler (settings,"Welcome to the JPEG RAW Organizer \r\nType \"help\" to see all commands\r\n\n"++ show settings)
 
 -- |Handles the user input by reading a line from the console recursively.
 inputHandler :: (PhotoSetting, String) -- ^Tuple containing the current settings
@@ -29,6 +32,7 @@ inputHandler :: (PhotoSetting, String) -- ^Tuple containing the current settings
 inputHandler (settings, message) = do
   hSetBuffering stdout NoBuffering
   putStrLn message
+  putStr "> "
   input <- getLine :: IO String
 
   if input == "quit" || input == ":q"
@@ -146,8 +150,8 @@ uniformFileExtension :: String -- ^The extension to be uniformed as a string.
 uniformFileExtension ext = do
   if length ext >0
     then if head ext /= '.'
-          then "." ++ ext
-          else ext
+          then "." ++ (map toLower ext)
+          else map toLower ext
     else ".*"
 
 -- |Initializes the given settings by setting the paths relativ to the

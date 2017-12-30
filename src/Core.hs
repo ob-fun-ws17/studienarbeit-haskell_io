@@ -11,6 +11,7 @@ import System.Directory
 import System.FilePath
 import Control.Monad
 import Data.List
+import Data.Char
 
 -- | data PhotoFile
 -- This data represents a Photo File, or generally spoken a File.
@@ -40,7 +41,7 @@ data PhotoSetting = PhotoSetting
   deriving (Eq)
 -- | this instance of show, formats the Photosettings String to make it appear more beautiful.
 instance Show PhotoSetting where
-  show (PhotoSetting a b c d e f) = concat [ "PhotoSettings: \r\n"
+  show (PhotoSetting a b c d e f) = concat [ "Settings: \r\n"
                                             , "jpegPath:    "++ show a ++ "\r\n"
                                             , "rawPath:     "++ show b ++ "\r\n"
                                             , "binPath:     "++ show c ++ "\r\n"
@@ -82,7 +83,7 @@ loadPhotoFiles :: FilePath -- ^ the FilePath to read / load from.
                 -> IO [PhotoFile] -- ^ a List of PhotoFiles (Files), which are located in the specified path.
 loadPhotoFiles path extension  = do
   files <- listDirectory path
-  return $ filter (\x -> fileExtension x == extension)(map toPhotoFile files)
+  return $ filter (\x -> map toLower (fileExtension x) == extension)(map toPhotoFile files)
 -- | deleteDifferenceFiles
 -- gets some PhotoSettings. At first it loads from the specific paths,
 -- and calculates the Raw Files, wich have no counterpart in the Jpeg List
