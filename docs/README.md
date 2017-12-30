@@ -27,9 +27,22 @@ Beim Fotografieren entsteht pro Foto sowohl eine RAW als auch eine JPEG Datei. S
 |RawPath |**rp**|Ein absoluter Pfad|Setzt den Pfad in dem die RAW Dateien zu finden sind.|rp /home/img/raws|
 |JpegPath |**jp**|Ein absoluter Pfad|Setzt den Pfad in dem die JPEG Dateien zu finden sind.|jp /home/img/jpegs/|
 |BinPath |**bp**|Ein absoluter Pfad|Setzt den Pfad, in den die RAW Datein verschoben werden.|bp /home/img/trash bag|
-|RawEnding |**rend**|Eine Dateiendung|Setzt die Dateiendung der Dateien, die als RAW Dateien klassifiziert werden sollen.|rend .CR2|
-|JpegEnding |**jend**|Eine Dateiendung|Setzt die Dateiendung der Dateien, die als JPEG Dateien klassifiziert werden sollen.|jend jpg|
+|RawEnding |**rend**|Eine Dateiendung|Setzt die Dateiendung der Dateien, die als RAW Dateien klassifiziert werden sollen.\*|rend .CR2|
+|JpegEnding |**jend**|Eine Dateiendung|Setzt die Dateiendung der Dateien, die als JPEG Dateien klassifiziert werden sollen.\*|jend jpg|
 |FlagDeleteFiles |**fdf**|[True\|False]|True wenn die RAW Dateien gelöscht werden sollen, False falls sie verschoben werden sollen.|fdf False|
+\* Dateiendungen werden nicht case-sensitiv behandelt. Also ist JPG == jpg.
+
+### Standart Einstellungen:
+|Parameter|Wert|
+|:---|:---|
+|jpegPath|Aktueller Pfad des Programms|
+|rawPath|Aktueller Pfad des Programms/RAW/|
+|binPath|Aktueller Pfad des Programms/bin/|
+|jpegEnding|.jpg|
+|rawEnding|.cr2|
+|deleteFiles|False|
+
+
 
 
   
