@@ -52,6 +52,7 @@ Beim Fotografieren entsteht pro Foto sowohl eine RAW als auch eine JPEG Datei. S
  - Cmd.hs
  - CmdSpec.hs
  - Dokumentation
+ 
  CSuerig:
  - Core.hs
  - CoreSpec.hs
