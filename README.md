@@ -44,14 +44,16 @@ Beim Fotografieren entsteht pro Foto sowohl eine RAW als auch eine JPEG Datei. S
 |rawEnding|.cr2|
 |deleteFiles|False|
 
-
-
-
-  
-    
-    
-
-
 ## Dokumentation
 [Haddock Dokumentation](https://ob-fun-ws17.github.io/studienarbeit-haskell_io/haddock/index.html)
+
+## Arbeitsaufteilung
+ AMoser96:
+ - Cmd.hs
+ - CmdSpec.hs
+ - Dokumentation
+ CSuerig:
+ - Core.hs
+ - CoreSpec.hs
+ - Dokumentation
 
